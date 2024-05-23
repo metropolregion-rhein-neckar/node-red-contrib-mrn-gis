@@ -1,0 +1,73 @@
+<script type="text/javascript">
+    RED.nodes.registerType('geoserver-publish',{
+        category: 'GeoServer',
+        color: '#a6bbcf',
+        defaults: {      
+            geoServerConfigNodeId: {value:"", type:"geoserver-config", required: true},
+            geoserverWorkspace : { type: "string", required: true},
+            geoserverDatastoreName : {type: "string"}            
+        },
+        inputs:1,
+        outputs:1,
+        //icon: "file.png",
+        label: function() {
+            return this.name||'geoserver-publish';
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="geoserver-publish">
+    <div class="form-row">
+        <label for="node-input-geoServerConfigNodeId"><i class="fa fa-tag"></i> GeoServer Config Node</label>
+        <input type="text" id="node-input-geoServerConfigNodeId" placeholder="">
+    </div>
+  
+    <div class="form-row">
+        <label for="node-input-geoserverWorkspace"><i class="fa fa-tag"></i> Workspace</label>
+        <input type="text" id="node-input-geoserverWorkspace" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-geoserverDatastoreName"><i class="fa fa-tag"></i> Datastore Name (uses input file name if empty)</label>
+        <input type="text" id="node-input-geoserverDatastoreName" placeholder="">
+    </div>
+   
+</script>
+
+<script type="text/html" data-help-name="geoserver-publish">
+    <p>This node pushes a passed GeoPackage to a GeoServer</p>
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Path to the GeoPackage which should be pushed to the GeoServer </dd>
+  </dl>
+
+  <h3>Node-Configuration</h3>
+  <dl class="message-properties">
+    <dt> GeoServer Config Node <span class="property-type">Config-Node</span></dt>
+    <dd>
+        Configuration node, which contains all the necessary parameters for establishing a connection to GeoSever.
+    </dd>
+    <dt> Workspace <span class="property-type">string</span></dt>
+    <dd>
+        Name of the GeoServer workspace in which the new datastore should be palced.
+    </dd>
+    <dt> Datastore <span class="property-type">string</span></dt>
+    <dd>
+        Name of the datastore. If the datastore already exists, it will be overwritten.
+    </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>URLs of the WMS and/or WFS services created by GeoServer for the published GeoPackage file.
+            Note that these can be more than one, so the node might send multiple outgoing messages for one input.</dd>
+      </dl>
+    </li>
+  </ol>
+</script>

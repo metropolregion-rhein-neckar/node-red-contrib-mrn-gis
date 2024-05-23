@@ -1,0 +1,92 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-to-gpkg", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      outfilePath: { value: "" },
+      layerNamePrefix: {},
+      convert: { value: false },
+      lowerCaseOption: { value: false },
+      removeSpaces: { value: false },
+    },
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geojson-to-gpkg";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-to-gpkg">
+  <div class="form-row">
+    <label for="node-input-outfilePath"><i class="fa fa-tag"></i> Output File Path</label>
+    <input type="text" id="node-input-outfilePath" placeholder="" />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-layerNamePrefix"><i class="fa fa-tag"></i> Layer Name Prefix</label>
+    <input type="text" id="node-input-layerNamePrefix" placeholder="" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-convert"><i class="fa fa-tag"></i>Convert Single- To Multigeometries</label>
+    <input type="checkbox" id="node-input-convert" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-lowerCaseOption"><i class="fa fa-tag"></i>Convert Property Names To LowerCase</label>
+    <input type="checkbox" id="node-input-lowerCaseOption" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-removeSpaces"><i class="fa fa-tag"></i>Remove Spaces From Property Names</label>
+    <input type="checkbox" id="node-input-removeSpaces" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-to-gpkg">
+
+  <p>
+    This node creates a GeoPackage from a GeoJSON. <b>For this node to work correctily env.TmpDir has to be specified.</b>
+  </p>
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Valid GeoJSON FeatureCollection</dd>
+  </dl>
+
+  <h3>Node-Configuration</h3>
+  <dl class="message-properties">
+    <dt>Output File Path (optional) <span class="property-type">string/path</span></dt>
+    <dd>
+      If not set, a uuid is used as filename and stored in the directory specified in env.TmpDir. 
+      If this parameter is to be used, the filename/path <b>must</b> end with ".gpkg". It is possible to 
+      specify only the filename as well as a file path, but the specified folders must also exist. 
+      If a path is specified, note that the path specified env.TmpDir is used as the starting point.    
+    </dd>
+    <dt> Layer Name Prefix (optional)<span class="property-type">string</span></dt>
+    <dd>
+      Prefix, which precedes the layer name. The default layer name is the geometry type of the layer. 
+      If this parameter is set, the layer name structure will be "prefix_geometry".    
+    </dd>
+    <dt> Convert Single- to Multigeometries (optional)<span class="property-type">boolean</span></dt>
+    <dd>
+      Replaces the geometry of each feature with its "multi" equivalent.
+    </dd>
+    <dt> Remove Spaces From Property Names (optional) <span class="property-type">boolean</span></dt>
+    <dd>
+      Replaces spaces (" ") in property names with "".
+    </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>File path of the created GeoPackage</dd>
+      </dl>
+    </li>
+  </ol>
+
+</script>

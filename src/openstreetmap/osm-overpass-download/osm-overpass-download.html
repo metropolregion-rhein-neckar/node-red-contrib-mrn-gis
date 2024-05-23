@@ -1,0 +1,50 @@
+
+<script type="text/javascript">
+    RED.nodes.registerType('osm-overpass-download',{
+        category: 'OpenStreetMap',
+        color: '#FDF0C2',
+        defaults: {           
+            outfilePath: {value:""},
+            bbox: {},
+            tags: {},
+            overpassEndpointUrl: { value: "https://overpass-api.de/api/interpreter"},
+            name:{value:""}           
+        },
+        inputs:1,
+        outputs:1,
+        //icon: "file.png",
+        label: function() {
+            return this.name||'osm-overpass-download';
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="osm-overpass-download">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> </label>
+        <input type="text" id="node-input-name" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-overpassEndpointUrl"><i class="fa fa-tag"></i> Overpass Endpoint URL</label>
+        <input type="text" id="node-input-overpassEndpointUrl" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-bbox"><i class="fa fa-tag"></i>Query Bounding Box</label>
+        <input type="text" id="node-input-bbox" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-bbox"><i class="fa fa-tag"></i>Query Tags</label>
+        <input type="text" id="node-input-tags" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-input-outfilePath"><i class="fa fa-tag"></i> Output File Path</label>
+        <input type="text" id="node-input-outfilePath" placeholder="">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="osm-overpass-download">
+    <p>A Node-RED node</p>
+</script>

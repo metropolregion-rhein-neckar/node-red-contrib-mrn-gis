@@ -1,0 +1,27 @@
+<script type="text/javascript">
+    RED.nodes.registerType("ldi-avg", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        phenomenom: { value: "" },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "LuftdatenInfo-AVG";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="ldi-avg">
+    <div class="form-row">
+      <label for="node-input-phenomenom"><i class="fa fa-tag"></i> Phenomenom </label>
+      <input type="text" id="node-input-phenomenom" placeholder="PM10, PM2_5" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="ldi-avg">
+    <p>A node to average data from LuftDatenInfo.</p>
+  </script>
+  

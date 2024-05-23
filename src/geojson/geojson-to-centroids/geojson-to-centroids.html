@@ -1,0 +1,42 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-to-centroids", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {},
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geojson-to-centroids";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-to-centroids"></script>
+
+<script type="text/html" data-help-name="geojson-to-centroids">
+
+  <p>
+    This node creates the centroid for each feature of a GeoJSON FeatureCollection. 
+    It returns a GeoJSON FeatureCollection in which each feature geometry has been replaced by its centroid.
+  </p>
+
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Valid GeoJSON FeatureCollection</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>GeoJSON FeatureCollection</dd>
+      </dl>
+    </li>
+  </ol>
+
+</script>

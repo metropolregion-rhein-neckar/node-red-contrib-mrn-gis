@@ -1,0 +1,56 @@
+<script type="text/javascript">
+    RED.nodes.registerType("uba-request", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "", required: true },
+        date_from: { value: "" },
+        date_to: { value: "" },
+        time_from: { value: "" },
+        time_to: { value: "" },
+        scope: { value: "", required: true },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "UBA-Request";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="uba-request">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API URL</label>
+      <input
+        type="text"
+        id="node-input-api_url"
+        placeholder="https://www.umweltbundesamt.de/api/air_data/v2/measures/json"
+      />
+    </div>
+    <div class="form-row">
+      <label for="node-input-date_from"><i class="fa fa-tag"></i> Date from</label>
+      <input type="text" id="node-input-date_from" placeholder="" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-date_to"><i class="fa fa-tag"></i> Date to</label>
+      <input type="text" id="node-input-date_to" placeholder="" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-time_from"><i class="fa fa-tag"></i> Time from</label>
+      <input type="text" id="node-input-time_from" placeholder="" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-time_to"><i class="fa fa-tag"></i> Time to</label>
+      <input type="text" id="node-input-time_to" placeholder="" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-scope"><i class="fa fa-tag"></i> Scope</label>
+      <input type="text" id="node-input-scope" placeholder="2" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="uba-request">
+    <p>A node to request data from UBA.</p>
+  </script>
+  

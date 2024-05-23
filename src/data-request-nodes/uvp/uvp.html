@@ -1,0 +1,41 @@
+<script type="text/javascript">
+    RED.nodes.registerType("UVP", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "https://uvp-verbund.de/interface-opensearch/query", required: true },
+        boundingBox: { value: "", required: true },
+        boundingBox_type: {},
+      },
+      inputs: 1,
+      outputs: 1,
+      //icon: "file.png",
+      label: function () {
+        return this.name || "UVP";
+      },
+      oneditprepare() {
+        $("#node-input-boundingBox").typedInput({
+          types: ["msg", "str"],
+          typeField: "#node-input-boundingBox_type",
+        });
+        //console.log(this);
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="UVP">
+    <div class="form-row">
+      <label for="node-input-api_url"><i></i> API URL</label>
+      <input type="text" id="node-input-api_url" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-boundingBox"><i class="fa fa-map-marker"></i> Bounding Box</label>
+      <input type="text" id="node-input-boundingBox" placeholder="minLong,minLat,maxLong,maxLat" />
+      <input type="hidden" id="node-input-boundingBox_type" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="UVP">
+    <p>A Node-RED node</p>
+  </script>
+  

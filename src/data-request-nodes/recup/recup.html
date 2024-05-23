@@ -1,0 +1,31 @@
+<script type="text/javascript">
+    RED.nodes.registerType("recup", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "", required: true },
+      },
+      inputs: 1,
+      outputs: 1,
+      //icon: "file.png",
+      label: function () {
+        return this.name || "recup";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="recup">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API URL</label>
+      <input
+        type="text"
+        id="node-input-api_url"
+        placeholder="https://partner.recup.de/files/export/locations/location_exports.json"
+      />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="recup">
+    <p>A Node to request the data from reCup</p>
+  </script>
+  

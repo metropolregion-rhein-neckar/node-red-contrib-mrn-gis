@@ -1,0 +1,8 @@
+{
+"type": "FeatureCollection",
+"name": "polyInput",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+"features": [
+{ "type": "Feature", "properties": { }, "geometry": { "type": "Polygon", "coordinates": [ [ [ 8.613038314412629, 49.899941386969381 ], [ 8.619597575271463, 49.855484174481724 ], [ 8.681546150049352, 49.861314628578462 ], [ 8.692478251480743, 49.897026159921012 ], [ 8.613038314412629, 49.899941386969381 ] ] ] } }
+]
+}

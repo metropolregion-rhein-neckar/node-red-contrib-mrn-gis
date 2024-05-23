@@ -1,0 +1,120 @@
+<script type="text/javascript">
+    RED.nodes.registerType('regionalstatistik',{
+        category: 'data',
+        color: '#a6bbcf',
+        defaults: {         
+            code:{value:""},
+            agsfile:{value:""},
+            startyear:{value:""},
+            endyear:{value:""},
+            user:{value:"", required:true},
+            password:{value:"", required:true},
+            agscodes:{value:""},
+            save_time:{value:""},
+            save_format:{value:""},
+            transpose:{value:false}
+                  
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"regionalstatistik-request";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="regionalstatistik">
+    <div class="form-row">
+        <label for="node-input-code"><i class="fa fa-tag"></i>Regio stat code</label>
+        <input type="text" id="node-input-code" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-save_format"><i class="fa fa-tag"></i>Choose AGS format</label>
+        <select id="node-input-save_format" onchange="showHideSaveInput(this)">
+            <option value="agsfile">ags as prop in geojson (saves geojson)</option>
+            <option value="agscodes">manual codes (saves ffcsv)</option>
+        </select>
+    </div>
+    <div class="form-row" id="agscodes" style="display : none">
+        <label for="node-input-agscodes"><i class="fa fa-tag"></i>ags codes</label>
+        <input type="text" id="node-input-agscodes" placeholder="AGS1,AGS2,AGS3...">
+    </div>
+    <div class="form-row" id="agsfile" style="display : none">
+        <label for="node-input-agsfile"><i class="fa fa-tag"></i>Path to geoJSON containing AGS/geometry</label>
+        <input type="text" id="node-input-agsfile" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-save_time"><i class="fa fa-tag"></i> Choose time</label>
+        <select id="node-input-save_time" onchange="showHideTimeInput(this)">
+            <option value="recent">most recent</option>
+            <option value="timeseries">timeseries</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-transpose"><i class="fa fa-tag"></i>transpose table</label>
+        <input type="checkbox" id="node-input-transpose">
+    </div>
+    <div class="form-row" style="display : none" id="startyear">
+        <label for="node-input-startyear"><i class="fa fa-tag"></i>startyear</label>
+        <input type="text" id="node-input-startyear" placeholder="">
+    </div>
+    <div class="form-row" style="display : none" id="endyear">
+        <label for="node-input-endyear"><i class="fa fa-tag"></i>endyear</label>
+        <input type="text" id="node-input-endyear" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-user"><i class="fa fa-tag"></i>username</label>
+        <input type="text" id="node-input-user" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-password"><i class="fa fa-tag"></i>password</label>
+        <input type="password" id="node-input-password" placeholder="">
+    </div>
+</script>
+
+<script type="text/html" data-help-name="regionalstatistik">
+    <p>A node to request data from freifunk</p>
+</script>
+ <script>
+
+    function showHideTimeInput(sel){
+
+        let value = sel.value
+
+        if(value){
+            if(value=="recent"){
+                document.getElementById("startyear").style.display = "none";
+                document.getElementById("endyear").style.display = "none";            
+            }
+            if(value=="timeseries"){
+                document.getElementById("startyear").style.display = "block";
+                document.getElementById("endyear").style.display = "block";            
+            }
+        }
+        else{
+            document.getElementById("startyear").style.display = "none";
+            document.getElementById("endyear").style.display = "none"; 
+        }
+
+    }
+
+    function showHideSaveInput(sel){
+        let value = sel.value
+
+        if(value){
+            if(value=="agscodes"){
+                document.getElementById("agscodes").style.display = "block";
+                document.getElementById("agsfile").style.display = "none";            
+            }
+            if(value=="agsfile"){
+                document.getElementById("agscodes").style.display = "none";
+                document.getElementById("agsfile").style.display = "block";            
+            }
+        }
+        else{
+            document.getElementById("agscodes").style.display = "none";
+            document.getElementById("agsfile").style.display = "none"; 
+        }
+    }
+ </script>

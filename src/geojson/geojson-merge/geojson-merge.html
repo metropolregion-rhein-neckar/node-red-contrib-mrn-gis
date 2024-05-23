@@ -1,0 +1,86 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-merge", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      time: { value: "" },
+      action: { value: "" },
+      key: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    // icon "file.png",
+    label: function () {
+      return this.name || "Merge-GeoJSON";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-merge">
+  <div class="form-row">
+    <label for="node-input-action"><i class="fa fa-tag"></i>Choose Action</label>
+    <select id="node-input-action">
+      <option value="merge">Merge Features</option>
+      <option value="joinProps">Join Properties On Key</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-key"><i class="fa fa-tag"></i> Property To Join (Key)</label>
+    <input type="text" id="node-input-key" placeholder="" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-time"><i class="fa fa-tag"></i> Timeout</label>
+    <input type="text" id="node-input-time" placeholder="" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-merge">
+  <p>Depending on the settings made, this node merges all features of several GeoJSON FeatureCollections, 
+    or joins all properties of the passed GeoJSON FeatureCollections.</p>
+  
+    <h3>Message-Properties</h3>
+    <dl class="message-properties">
+      <dt> payload <span class="property-type">GeoJSON</span> </dt>
+      <dd>Valid GeoJSON FeatureCollection</dd>
+    </dl>
+
+    <h3>Node-Configuration</h3>
+    <dl class="message-properties">
+      <dt> Choose Action <span class="property-type">Selector</span></dt>
+      <dd>
+        <ul>
+          <li><b>Merge Features:</b> 
+            Merges all features of the passed GeoJSON FeatureCollections.
+          </li>
+          <li>
+            <b>Join Properties on Key:</b> 
+            Joins the properties of features of multiple GeoJSON FeatureCollections. The FeatureCollection that arrives 
+            <b>first</b> at the node is used as the base of the join. The feature properties are merged when a feature of another 
+            incoming FeatureCollection has an identical value to a feature of the base FeatureCollection in the property 
+            specified in "Property To Join (Key)". <b>Only the first match is considered</b>.
+          </li>
+        </ul>
+      </dd>
+      <dt> Property To Join (Key) <span class="property-type">string</span></dt>
+      <dd>
+        Name of the property to be used as key for the join. The property values should be unique. Furthermore, 
+        the property specified here must be present in every feature of the FeatureCollection. <b>The node does not check this (yet)!</b>
+      </dd>
+      <dt> Timeout <span class="property-type">number</span></dt>
+      <dd>
+        Seconds that the node waits for the message from the previous nodes. When this threshold is reached, 
+        the selected action is executed with the FeatureCollections that have arrived so far.
+      </dd>
+    </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>GeoJSON FeatureCollection</dd>
+      </dl>
+    </li>
+  </ol>
+</script>

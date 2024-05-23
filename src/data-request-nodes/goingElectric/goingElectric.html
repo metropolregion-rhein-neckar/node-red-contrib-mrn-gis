@@ -1,0 +1,47 @@
+<script type="text/javascript">
+    RED.nodes.registerType("goingElectric", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "", required: true },
+        bbox: { value: "", required: true },
+        key: { value: "" },
+        save_phenomenom: { value: "", required: true },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "goingElectric-request";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="goingElectric">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API URL</label>
+      <input type="text" id="node-input-api_url" placeholder="https://api.goingelectric.de/chargepoints/" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-key"><i class="fa fa-tag"></i> API key</label>
+      <input type="text" id="node-input-key" placeholder="" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-bbox"><i class="fa fa-tag"></i> BoundingBox</label>
+      <input type="text" id="node-input-bbox" placeholder="49.0251007,7.9529214,49.7615924,9.2630410" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-save_phenomenom"><i class="fa fa-tag"></i> Choose Phenomenom</label>
+      <select id="node-input-save_phenomenom">
+        <option value="bikes">save e-bike chargepoints</option>
+        <option value="cars">save car chargepoints</option>
+        <option value="fast_car">save car fast chargepoints</option>
+        <option value="all">save all</option>
+      </select>
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="goingElectric">
+    <p>A node to request data from goingElectric.</p>
+  </script>
+  

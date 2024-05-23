@@ -1,0 +1,73 @@
+<script type="text/javascript">
+    RED.nodes.registerType('geoserver-config',{
+        category: 'config',
+        color: '#a6bbcf',
+        defaults: {
+            name : {value:"", required:true},
+            geoServerBaseUrl : { type: "string", required: true},
+            geoServerUsername : {type: "string", required: true},
+            geoServerPassword : {type : "string", required: true}
+        },
+        inputs:1,
+        outputs:1,
+        //icon: "file.png",
+        label: function() {
+            return this.name||'geoserver-config';
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="geoserver-config">
+
+    <div class="form-row">
+        <label for="node-config-input-name"><i class="fa fa-tag"></i>Name</label>
+        <input type="text" id="node-config-input-name" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-geoServerBaseUrl"><i class="fa fa-tag"></i>GeoServer Base URL</label>
+        <input type="text" id="node-config-input-geoServerBaseUrl" placeholder="https://">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-geoServerUsername"><i class="fa fa-tag"></i>Username</label>
+        <input type="text" id="node-config-input-geoServerUsername" placeholder="">
+    </div>
+
+    <div class="form-row">
+        <label for="node-config-input-geoServerPassword"><i class="fa fa-tag"></i>Password</label>
+        <input type="password" id="node-config-input-geoServerPassword" placeholder="">
+    </div>
+    
+</script>
+
+<script type="text/html" data-help-name="geoserver-config">
+    <p>This node stores the part parameters for a geoserver connection</p>
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Valid GeoJSON FeatureCollection</dd>
+  </dl>
+
+  <h3>Node-Configuration</h3>
+  <dl class="message-properties">
+    <dt> Name <span class="property-type">string</span></dt>
+    <dd>
+      Connection name.
+    </dd>
+    <dt> GeoServer Base URL <span class="property-type">string</span></dt>
+    <dd>
+      URL of the GeoServer.
+    </dd>
+    <dt> Username <span class="property-type">number</span></dt>
+    <dd>
+      Username for GeoServer user.
+    </dd>
+    <dt> Password <span class="property-type">boolean</span></dt>
+    <dd>
+      Password for the GeoServer user.
+    </dd>
+  </dl>
+
+</script>

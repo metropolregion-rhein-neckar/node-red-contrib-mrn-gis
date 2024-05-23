@@ -1,0 +1,53 @@
+<script type="text/javascript">
+    RED.nodes.registerType("opensense-request", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "", required: true },
+        timestamp: { value: "" },
+        bbox: { value: "", required: true },
+        save_phenomenom: { value: "", required: true },
+        filter_ldi: { value: false },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "OpenSenseMap-Request";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="opensense-request">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API URL</label>
+      <input type="text" id="node-input-api_url" placeholder="https://api.opensensemap.org/boxes" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-timestamp"><i class="fa fa-tag"></i> Timestamp</label>
+      <input type="text" id="node-input-timestamp" placeholder="" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-bbox"><i class="fa fa-tag"></i> BoundingBox</label>
+      <input type="text" id="node-input-bbox" placeholder="7.9529214,49.0251007,9.2630410,49.7615924" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-save_phenomenom"><i class="fa fa-tag"></i> Choose Phenomenom</label>
+      <select id="node-input-save_phenomenom">
+        <option value="PM10">PM10</option>
+        <option value="PM2.5">PM2.5</option>
+        <option value="Temperatur">Temperatur</option>
+        <option value="rel. Luftfeuchte">Humidity</option>
+        <option value="Luftdruck">Preassure at sea level</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-filter_ldi"><i class="fa fa-tag"></i>Remove LuftDatenInfo sensors</label>
+      <input type="checkbox" id="node-input-filter_ldi" placeholder="" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="opensense-request">
+    <p>A node to request data from opensensemap.</p>
+  </script>
+  

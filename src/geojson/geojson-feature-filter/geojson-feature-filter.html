@@ -1,0 +1,152 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-feature-filter", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      save_phenomenom: { value: "", required: true },
+      property: { value: "" },
+      value: { value: "" },
+      empty: { value: false },
+      buffer: { vlaue: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geojson-feature-filter";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-feature-filter">
+  <div class="form-row">
+    <label for="node-input-save_phenomenom"><i class="fa fa-tag"></i> Choose Action</label>
+    <select id="node-input-save_phenomenom" onchange="showHideInput(this)">
+      <option value="outliers">Filter For Outliers</option>
+      <option value="values_empty">Remove Features If Property Is Empty</option>
+      <option value="values">Remove Features By Property Value</option>
+      <option value="feature_buffer">Remove Features Within Radius Of Each Other</option>
+      <option value="remove_equal_values">Remove Features With Equal Values</option>
+    </select>
+  </div>
+  <div class="form-row" id="prop_name" style="display : none">
+    <label for="node-input-property"><i class="fa fa-tag"></i> Property </label>
+    <input type="text" id="node-input-property" placeholder="" />
+  </div>
+  <div class="form-row" id="prop_value" style="display : none">
+    <label for="node-input-value"><i class="fa fa-tag"></i> Value </label>
+    <input type="text" id="node-input-value" placeholder="" />
+  </div>
+  <div class="form-row" id="buffer" style="display : none">
+    <label for="node-input-buffer"><i class="fa fa-tag"></i> Buffersize In M </label>
+    <input type="text" id="node-input-buffer" placeholder="" />
+  </div>
+  <div class="form-row" id="prop_empty" style="display : none">
+    <label for="node-input-empty"><i class="fa fa-tag"></i>Remove Features With Empty Property</label>
+    <input type="checkbox" id="node-input-empty" placeholder="" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-feature-filter">
+  <p>This node filters the features of a GeoJSON FeatureCollection based on the settings made</p>
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Valid GeoJSON FeatureCollection</dd>
+  </dl>
+
+  <h3>Node-Configuration</h3>
+  <dl class="message-properties">
+    <dt> Choose Action <span class="property-type">Selector</span></dt>
+    <dd>
+      <ul>
+        <li><b>Remove Outliers:</b> 
+          Removes outliers based on a passed property using quantiles.
+        </li>
+        <li>
+          <b>Remove Features If Property Is Empty:</b> 
+          Removes features if a passed property is undefined, null or "".
+        </li>
+        <li>
+          <b>Remove Features By Property Value:</b> 
+          Removes features if a passed property equals the given value.
+        </li>
+        <li>
+          <b>Remove Features Within Radius Of Each Other:</b> 
+          Removes features in a passed radius of another feature. Before removing the features,
+          they are sorted by completeness of the properties. The most incomplete features are removed.
+        </li>
+        <li>
+          <b>Remove Features With Equal Values:</b> 
+          Removes features that have duplicate values for a passed property. Before removing the features, 
+          they are sorted by completeness of the properties. The most incomplete features are removed.
+        </li>
+      </ul>
+    </dd>
+    <dt> Property <span class="property-type">string</span></dt>
+    <dd>
+      Name of the property.
+    </dd>
+    <dt> Value <span class="property-type">string</span></dt>
+    <dd>
+      Value of the property.
+    </dd>
+    <dt> Buffersize In M <span class="property-type">number</span></dt>
+    <dd>
+      Size of the buffer.
+    </dd>
+    <dt> Remove Features With Empty Property <span class="property-type">boolean</span></dt>
+    <dd>
+      Checkbox.
+    </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>GeoJSON FeatureCollection</dd>
+      </dl>
+    </li>
+  </ol>
+</script>
+
+<script>
+  function showHideInput(sel) {
+    let value = sel.value;
+    if (value) {
+      if (value == "outliers") {
+        document.getElementById("prop_name").style.display = "block";
+        document.getElementById("prop_value").style.display = "none";
+        document.getElementById("prop_empty").style.display = "none";
+        document.getElementById("buffer").style.display = "none";
+      }
+      if (value == "values_empty" || value == "remove_equal_values") {
+        document.getElementById("prop_name").style.display = "block";
+        document.getElementById("prop_value").style.display = "none";
+        document.getElementById("prop_empty").style.display = "none";
+        document.getElementById("buffer").style.display = "none";
+      }
+      if (value == "values") {
+        document.getElementById("prop_name").style.display = "block";
+        document.getElementById("prop_value").style.display = "block";
+        document.getElementById("prop_empty").style.display = "block";
+        document.getElementById("buffer").style.display = "none";
+      }
+      if (value == "feature_buffer") {
+        document.getElementById("buffer").style.display = "block";
+        document.getElementById("prop_name").style.display = "none";
+        document.getElementById("prop_value").style.display = "none";
+        document.getElementById("prop_empty").style.display = "none";
+      }
+    } else {
+      document.getElementById("prop_name").style.display = "none";
+      document.getElementById("prop_value").style.display = "none";
+      document.getElementById("prop_empty").style.display = "none";
+      document.getElementById("buffer").style.display = "none";
+    }
+  }
+</script>

@@ -1,0 +1,101 @@
+<script type="text/javascript">
+    RED.nodes.registerType("osm-monitoring", {
+      category: "OpenStreetMap",
+      color: "#FDF0C2",
+      defaults: {
+        outfilePath: { value: "" },
+        save_phenomenom: { value: "", required: true },
+        time: { value: "", required: true },
+        filter1: { value: "" },
+        filter2: { value: "" },
+        bpoly: { value: "" },
+        region: { value: false },
+        capita_prop: { value: "" },
+      },
+      inputs: 1,
+      outputs: 1,
+      //icon: "font-awesome/fa-map",
+      label: function () {
+        return this.name || "OSM-Monitoring";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="osm-monitoring">
+    <div class="form-row">
+      <label for="node-input-outfilePath"><i class="fa fa-tag"></i> Outfile path</label>
+      <input type="text" id="node-input-outfilePath" placeholder="" />
+    </div>
+  
+    <div class="form-row">
+      <label for="node-input-bpoly"><i class="fa fa-tag"></i> GeoJSON bpoly </label>
+      <input type="text" id="node-input-bpoly" placeholder="path/to/geojson/featureCollection" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-save_phenomenom"><i class="fa fa-tag"></i> Choose Phenomenom</label>
+      <select id="node-input-save_phenomenom" onchange="showDiv(this)">
+        <option value="feature_count_date">Feature count effective date</option>
+        <option value="feature_count_time">Feature count over time</option>
+        <option value="feature_emptiness_date">Feature emptyness effective date</option>
+        <option value="feature_emptiness_time">Feature emptyness over time</option>
+        <option value="user_count_date">OSM-User effective month</option>
+        <option value="user_count_time">OSM-User over time</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-time"><i class="fa fa-tag"></i> Time</label>
+      <input type="text" id="node-input-time" placeholder="" />
+    </div>
+    <div class="form-row" id="filter1" style="display : none">
+      <label for="node-input-filter1"><i class="fa fa-tag"></i> Filter 1</label>
+      <input type="text" id="node-input-filter1" placeholder="" />
+    </div>
+    <div class="form-row" id="filter2" style="display : none">
+      <label for="node-input-filter2"><i class="fa fa-tag"></i> Filter 2</label>
+      <input type="text" id="node-input-filter2" placeholder="" />
+    </div>
+  
+    <div class="form-row" id="byRegion" style="display : none">
+      <label for="node-input-region"><i class="fa fa-tag"></i>Get user count for each feature in geojson</label>
+      <input type="checkbox" id="node-input-region" placeholder="" />
+    </div>
+    <div class="form-row" id="capita_prop" style="display : none">
+      <label for="node-input-capita_prop"><i class="fa fa-tag"></i> Population property</label>
+      <input type="text" id="node-input-capita_prop" placeholder="" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="osm-monitoring">
+    <p>A node to request data from LuftDatenInfo.</p>
+  </script>
+  
+  <script>
+    function showDiv(nameSelect) {
+      if (nameSelect) {
+        if (nameSelect.value == "feature_count_date" || nameSelect.value == "feature_count_time") {
+          document.getElementById("filter1").style.display = "block";
+          document.getElementById("filter2").style.display = "none";
+          document.getElementById("byRegion").style.display = "none";
+          document.getElementById("capita_prop").style.display = "none";
+        }
+        if (nameSelect.value == "feature_emptiness_time" || nameSelect.value == "feature_emptiness_date") {
+          document.getElementById("filter1").style.display = "block";
+          document.getElementById("filter2").style.display = "block";
+          document.getElementById("byRegion").style.display = "none";
+          document.getElementById("capita_prop").style.display = "none";
+        }
+        if (nameSelect.value == "user_count_date" || nameSelect.value == "user_count_time") {
+          document.getElementById("filter1").style.display = "block";
+          document.getElementById("filter2").style.display = "none";
+          document.getElementById("byRegion").style.display = "block";
+          document.getElementById("capita_prop").style.display = "block";
+        }
+      } else {
+        document.getElementById("filter1").style.display = "none";
+        document.getElementById("filter2").style.display = "none";
+        document.getElementById("byRegion").style.display = "none";
+        document.getElementById("capita_prop").style.display = "none";
+      }
+    }
+  </script>
+  

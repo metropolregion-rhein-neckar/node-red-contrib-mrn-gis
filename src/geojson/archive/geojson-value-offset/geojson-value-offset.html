@@ -1,0 +1,184 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-value-offset", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      timeframe: { value: "" },
+      action: { value: "" },
+      offsetFile: { value: "" },
+      propName1: { value: "" },
+      propName2: { value: "" },
+      propName: { value: "" },
+      constantValue: { value: "" },
+      propLocation: { value: "" },
+      roundOption: { value: false },
+    },
+    inputs: 1,
+    outputs: 1,
+    // icon "file.png",
+    label: function () {
+      return this.name || "geojson-value-offset";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-value-offset">
+  <div class="form-row">
+    <label for="node-input-timeframe"><i class="fa fa-tag"></i> Choose timeframe</label>
+    <select id="node-input-timeframe">
+      <option value="single">single</option>
+      <option value="timeseries">timeseries</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-action"><i class="fa fa-tag"></i>choose action</label>
+    <select id="node-input-action">
+      <option value="add">add</option>
+      <option value="subtract">subtract</option>
+      <option value="multiply">multiply</option>
+      <option value="divide">divide</option>
+      <option value="divideArea">divide by area</option>
+      <option value="calcShare">calculate share</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-propLocation"><i class="fa fa-tag"></i>Location offset property</label>
+    <select id="node-input-propLocation" onchange="showHideFileInput(this)">
+      <option value="sameFile">same file</option>
+      <option value="otherFile">other file</option>
+      <option value="constValue">constant value</option>
+    </select>
+  </div>
+  <div class="form-row">
+    <label for="node-input-roundOption"><i class="fa fa-tag"></i>Round results</label>
+    <input type="checkbox" id="node-input-roundOption" />
+  </div>
+  <div class="form-row" id="offsetFile" style="display : none">
+    <label for="node-input-offsetFile"><i class="fa fa-tag"></i>Path to offset file</label>
+    <input type="text" id="node-input-offsetFile" placeholder="" />
+  </div>
+  <div class="form-row" id="constValue" style="display : none">
+    <label for="node-input-constantValue"><i class="fa fa-tag"></i>Constant value</label>
+    <input type="text" id="node-input-constantValue" placeholder="" />
+  </div>
+  <div class="form-row" id="propName1" style="display : none">
+    <label for="node-input-proName1"><i class="fa fa-tag"></i>property 1</label>
+    <input type="text" id="node-input-propName1" placeholder="" />
+  </div>
+  <div class="form-row" id="propName2" style="display : none">
+    <label for="node-input-proName2"><i class="fa fa-tag"></i>property 2</label>
+    <input type="text" id="node-input-propName2" placeholder="" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-propName"><i class="fa fa-tag"></i>New property name</label>
+    <input type="text" id="node-input-propName" placeholder="" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-value-offset">
+  <p>Basic calcutaltions for GeoJSON properties</p>
+
+  <h3>Inputs</h3>
+  <dl class="message-properties">
+    <dt>
+      payload
+      <span class="property-type">string</span>
+    </dt>
+    <dd>file path to a geojson</dd>
+  </dl>
+  <dl class="message-properties">
+    <dt>
+      outfile path
+      <span class="property-type">string</span>
+    </dt>
+    <dd>outfile path. if a config node node is given the output file will be saved relativ to the config node path</dd>
+    <dt>
+      config-node
+      <span class="property-type">config-node</span>
+    </dt>
+    <dd>conatins the temp dir in which the outputfiles are stored</dd>
+    <dt>
+      timeframe
+      <span class="property-type">selector</span>
+    </dt>
+    <dd>
+      single only uses the properties given in property 1 and 2.
+      <p>
+        for timeframe the properties need to be formated as follows: propertyName_YYYY. the node will search the
+        corresponding property 1 and 2 pairs e.g. propertyName1_2017, propertyName2_2017.
+      </p>
+    </dd>
+    <dt>
+      choose action
+      <span class="property-type">selector</span>
+    </dt>
+    <dd>select calculation type</dd>
+    <dt>
+      Location offset property
+      <span class="property-type">selector</span>
+    </dt>
+    <dd>
+      specify location of the properties. otherfile file matches the features by geometry, therefore it will only work
+      if both files have equal geometries.
+    </dd>
+    <dt>
+      property 1 and 2
+      <span class="property-type">string</span>
+    </dt>
+    <dd>
+      name of properties. for division property 1 is the numerater and property 2 the denominator. for subraction
+      property 1 is the minuend and property 2 the subtrahend.
+    </dd>
+    <dt>
+      new property name
+      <span class="property-type">string</span>
+    </dt>
+    <dd>name of new property</dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">string</span></dt>
+        <dd>file path to geojson containing the new property</dd>
+      </dl>
+    </li>
+  </ol>
+</script>
+<script>
+  function showHideFileInput(sel) {
+    let value = sel.value;
+
+    if (value) {
+      if (value == "sameFile") {
+        document.getElementById("offsetFile").style.display = "none";
+        document.getElementById("constValue").style.display = "none";
+
+        document.getElementById("propName1").style.display = "block";
+        document.getElementById("propName2").style.display = "block";
+      }
+      if (value == "otherFile") {
+        document.getElementById("offsetFile").style.display = "block";
+        document.getElementById("constValue").style.display = "none";
+
+        document.getElementById("propName1").style.display = "block";
+        document.getElementById("propName2").style.display = "block";
+      }
+      if (value == "constValue") {
+        document.getElementById("offsetFile").style.display = "none";
+        document.getElementById("constValue").style.display = "block";
+
+        document.getElementById("propName1").style.display = "block";
+        document.getElementById("propName2").style.display = "none";
+      }
+    } else {
+      document.getElementById("offsetFile").style.display = "none";
+      document.getElementById("constValue").style.display = "none";
+
+      document.getElementById("propName1").style.display = "none";
+      document.getElementById("propName2").style.display = "none";
+    }
+  }
+</script>

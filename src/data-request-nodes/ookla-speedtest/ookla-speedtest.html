@@ -1,0 +1,40 @@
+<script type="text/javascript">
+    RED.nodes.registerType("OklaaSpeedTest", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "" },
+        bbox: { value: "" },
+        save_phenomenom: { value: "" },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "OklaaSpeedTest-request";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="OklaaSpeedTest">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API base url</label>
+      <input type="text" id="node-input-api_url" placeholder="s3://ookla-open-data/shapefiles/performance/" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-bbox"><i class="fa fa-tag"></i> BBOX</label>
+      <input type="text" id="node-input-bbox" placeholder="minX, minY, maxX, maxY " />
+    </div>
+    <div class="form-row">
+      <label for="node-input-save_phenomenom"><i class="fa fa-tag"></i> Choose </label>
+      <select id="node-input-save_phenomenom">
+        <option value="fixed">fixed</option>
+        <option value="mobile">mobile</option>
+      </select>
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="OklaaSpeedTest">
+    <p>A node to request data from OklaaSpeedTest</p>
+  </script>
+  

@@ -1,0 +1,30 @@
+<script type="text/javascript">
+    RED.nodes.registerType('node-error-out',{
+        category: 'NodeError',
+        color: '#a6bbcf',
+        defaults: {
+            errorThreshold : {value:"", required:true}, 
+        },
+        inputs:1,
+        outputs:1,
+        //icon: "file.png",
+        label: function() {
+            return this.name||'node-error-out';
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="node-error-out">
+
+  
+    <div class="form-row">
+        <label for="node-input-errorThreshold"><i class="fa fa-tag"></i> error treshhold</label>
+        <input type="text" id="node-input-errorThreshold" placeholder="">
+    </div>
+
+
+</script>
+
+<script type="text/html" data-help-name="node-error-out">
+    <p>A Node-RED node</p>
+</script>

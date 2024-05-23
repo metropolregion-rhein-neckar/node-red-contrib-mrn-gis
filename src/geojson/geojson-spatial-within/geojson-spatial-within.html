@@ -1,0 +1,78 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-spatial-within", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      source_layer: { value: "", required: true },
+      intersecting_layer: { value: "", required: true },
+      intersecting_layer_type:{},
+      source_layer_type:{}
+    },
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geojson-spatial-within";
+    },
+    oneditprepare() {
+      $("#node-input-intersecting_layer").typedInput({
+          types: ["msg", "str"],
+          typeField: "#node-input-intersecting_layer_type",
+        });
+        $("#node-input-source_layer").typedInput({
+          types: ["msg", "str"],
+          typeField: "#node-input-source_layer_type",
+        });
+        console.log(this);
+      },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-spatial-within">
+  <div class="form-row">
+    <label for="node-input-source_layer"><i class="fa fa-tag"></i> Source GeoJSON</label>
+    <input type="text" id="node-input-source_layer" placeholder="" />
+    <input type="hidden" id="node-input-source_layer_type" />
+  </div>
+
+
+  <div class="form-row">
+    <label for="node-input-intersecting_layer"><i class="fa fa-map-marker"></i> Intersecting GeoJSON</label>
+    <input type="text" id="node-input-intersecting_layer" placeholder="" />
+    <input type="hidden" id="node-input-intersecting_layer_type" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-spatial-within">
+
+  <p>
+    This node intersects a source GeoJSON with an intersecting GeoJSON and provides the features, or parts features, 
+    of the intersecting GeoJSON that are within the features of the source layer. <b>The source layer supports only features 
+    of type Polygon or MultiPolygon! </b>. Both Layers must have the same CRS!. <b>ATTENTION:</b> (Multi-) LineStrings will be clipped!!
+  </p>
+
+
+  <h3>Node-Configuration/Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> Source GeoJSON: <span class="property-type">string/GeoJSON</span></dt>
+    <dd>
+      Either a valid GeoJSON which is contained in the msg object or the specification of a path to a geojson.
+    </dd>
+    <dt> Intersecting GeoJSON <span class="property-type">string/GeoJSON</span></dt>
+    <dd>
+      Either a valid GeoJSON which is contained in the msg object or the specification of a path to a geojson.
+    </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>GeoJSON FeatureCollection with the features of the intersecting layer, which are within the source layer.</dd>
+      </dl>
+    </li>
+  </ol>
+
+</script>

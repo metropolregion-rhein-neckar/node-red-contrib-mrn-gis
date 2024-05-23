@@ -1,0 +1,32 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geocoder", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      query_field_name: { value: "" },
+      here_api_key: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geocoder";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geocoder">
+  <div class="form-row">
+    <label for="node-input-query_field_name"><i class="fa fa-tag"></i> Query field name</label>
+    <input type="text" id="node-input-query_field_name" placeholder="" />
+  </div>
+
+  <div class="form-row">
+    <label for="node-input-here_api_key"><i class="fa fa-tag"></i> HERE API Key</label>
+    <input type="text" id="node-input-here_api_key" placeholder="HERE API Key" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geocoder">
+  <p>A Node-RED node</p>
+</script>

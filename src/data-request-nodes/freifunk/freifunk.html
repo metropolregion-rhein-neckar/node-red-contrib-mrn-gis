@@ -1,0 +1,33 @@
+<script type="text/javascript">
+    RED.nodes.registerType("freifunk", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        outfilePath: { value: "" },
+        api_url: { value: "" },
+        bbox: { value: "" },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "freifunk-request";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="freifunk">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API base url</label>
+      <input type="text" id="node-input-api_url" placeholder="https://www.freifunk-karte.de/fetch.php?content=gpxfile" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-bbox"><i class="fa fa-tag"></i> Bbox</label>
+      <input type="text" id="node-input-bbox" placeholder="minLong,minLat,maxLong,maxLat" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="freifunk">
+    <p>A node to request data from freifunk</p>
+  </script>
+  

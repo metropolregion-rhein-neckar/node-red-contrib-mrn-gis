@@ -1,0 +1,73 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-properties-renamer", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      oldPropNames: { value: "" },
+      newPropNames: { value: "" },
+      removeSprecialCharacters: { value: false },
+      toLowerCase: { value: false }
+    },
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geojson-properties-renamer";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-properties-renamer">
+  <div class="form-row">
+    <label for="node-input-oldPropNames"><i class="fa fa-tag"></i>Old Properties</label>
+    <input type="text" id="node-input-oldPropNames" placeholder="" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-newPropNames"><i class="fa fa-tag"></i>New Properties</label>
+    <input type="text" id="node-input-newPropNames" placeholder="" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-toLowerCase"><i class="fa fa-tag"></i>Property Names To Lower Case</label>
+    <input type="checkbox" id="node-input-toLowerCase" />
+  </div>
+  <div class="form-row">
+    <label for="node-input-removeSprecialCharacters"><i class="fa fa-tag"></i>Remove Special Characters</label>
+    <input type="checkbox" id="node-input-removeSprecialCharacters" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-properties-renamer">
+  <p>
+    This node renames the passed properties of features from a GeoJSON FeatureCollection. If a feature does not contain a passed property, 
+    the feature is skipped. 
+  </p>
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Valid GeoJSON FeatureCollection</dd>
+  </dl>
+
+  <h3>Node-Configuration</h3>
+  <dl class="message-properties">
+    <dt> Old Properties <span class="property-type">string</span></dt>
+    <dd>
+      A comma-separated list of the current property names.
+    </dd>
+    <dt> New Properties <span class="property-type">string</span></dt>
+    <dd>
+      A comma-separated list of the new property names. The indexing must match the list passed in "Old Properties".
+    </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>GeoJSON FeatureCollection.</dd>
+      </dl>
+    </li>
+  </ol>
+</script>

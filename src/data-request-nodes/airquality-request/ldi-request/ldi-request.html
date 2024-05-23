@@ -1,0 +1,48 @@
+<script type="text/javascript">
+    RED.nodes.registerType("ldi-request", {
+      category: "data",
+      color: "#E9967A",
+      defaults: {
+        api_url: { value: "", required: true },
+        bbox: { value: "", required: true },
+        save_phenomenom: { value: "", required: true },
+        old_outfile: { value: false },
+      },
+      inputs: 1,
+      outputs: 1,
+      // icon "file.png",
+      label: function () {
+        return this.name || "LuftdatenInfo-Request";
+      },
+    });
+  </script>
+  
+  <script type="text/html" data-template-name="ldi-request">
+    <div class="form-row">
+      <label for="node-input-api_url"><i class="fa fa-tag"></i> API URL</label>
+      <input type="text" id="node-input-api_url" placeholder="https://data.sensor.community/airrohr/v1/filter/" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-bbox"><i class="fa fa-tag"></i> BoundingBox</label>
+      <input type="text" id="node-input-bbox" placeholder="7.9529214,49.0251007,9.2630410,49.7615924" />
+    </div>
+    <div class="form-row">
+      <label for="node-input-save_phenomenom"><i class="fa fa-tag"></i> Choose Phenomenom</label>
+      <select id="node-input-save_phenomenom">
+        <option value="P1">PM10</option>
+        <option value="P2">PM2.5</option>
+        <option value="temperature">Temperatur</option>
+        <option value="humidity">Humidity</option>
+        <option value="pressure_at_sealevel">Preassure at sea level</option>
+      </select>
+    </div>
+    <div class="form-row">
+      <label for="node-input-old_outfile"><i class="fa fa-tag"></i>Return previous outfile on error</label>
+      <input type="checkbox" id="node-input-old_outfile" placeholder="" />
+    </div>
+  </script>
+  
+  <script type="text/html" data-help-name="ldi-request">
+    <p>A node to request data from LuftDatenInfo.</p>
+  </script>
+  

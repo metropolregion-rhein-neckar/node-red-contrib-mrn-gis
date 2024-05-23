@@ -1,0 +1,53 @@
+<script type="text/javascript">
+  RED.nodes.registerType("geojson-properties-filter", {
+    category: "GeoJSON",
+    color: "#C7E9C0",
+    defaults: {
+      propertiesToKeep: { value: "" },
+    },
+    inputs: 1,
+    outputs: 1,
+    //icon: "file.png",
+    label: function () {
+      return this.name || "geojson-properties-filter";
+    },
+  });
+</script>
+
+<script type="text/html" data-template-name="geojson-properties-filter">
+  <div class="form-row">
+    <label for="node-input-propertiesToKeep"><i class="fa fa-tag"></i> Properties To Keep</label>
+    <input type="text" id="node-input-propertiesToKeep" placeholder="" />
+  </div>
+</script>
+
+<script type="text/html" data-help-name="geojson-properties-filter">
+  <p>
+    This node removes all but the passed properties of features from a GeoJSON FeatureCollection.
+  </p>
+
+  <h3>Message-Properties</h3>
+  <dl class="message-properties">
+    <dt> payload <span class="property-type">GeoJSON</span> </dt>
+    <dd>Valid GeoJSON FeatureCollection</dd>
+  </dl>
+
+  <h3>Node-Configuration</h3>
+  <dl class="message-properties">
+    <dt> Properties To Keep: <span class="property-type">string</span></dt>
+    <dd>
+      A comma-separated list of the properties to keep.
+    </dd>
+  </dl>
+
+  <h3>Outputs</h3>
+  <ol class="node-ports">
+    <li>
+      Standard output
+      <dl class="message-properties">
+        <dt>payload <span class="property-type">GeoJSON</span></dt>
+        <dd>GeoJSON FeatureCollection.</dd>
+      </dl>
+    </li>
+  </ol>
+</script>
